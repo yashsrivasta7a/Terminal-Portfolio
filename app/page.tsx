@@ -1,4 +1,3 @@
-// Updated GlassTerminalPortfolio.tsx with responsive neofetch command
 "use client";
 
 import type React from "react";
@@ -188,7 +187,6 @@ export default function GlassTerminalPortfolio() {
     },
   ];
 
-  // Format last login time dynamically
   const formatLastLogin = (date: Date) => {
     const now = new Date();
     const diffInMinutes = Math.floor(
@@ -202,7 +200,6 @@ export default function GlassTerminalPortfolio() {
     return date.toLocaleString();
   };
 
-  // Handle resume download by opening a new tab
   const handleResumeDownload = () => {
     window.open(
       "https://drive.google.com/file/d/1Ng9n3CK7_vxZLWjLufZuTLaGZdQL8ESe/view?usp=sharing",
@@ -687,7 +684,6 @@ Y S 7       7 S Y
   const handleCommand = (cmd: string) => {
     const [command, ...args] = cmd.trim().toLowerCase().split(" ");
 
-    // Add to command history if not empty
     if (cmd.trim()) {
       setCommandHistory((prev) => [...prev, cmd.trim()]);
       setHistoryIndex(-1);
@@ -745,8 +741,8 @@ Y S 7       7 S Y
   }, [history]);
 
   useEffect(() => {
-    // Set initial last login time
-    setLastLogin(new Date(Date.now() - Math.random() * 3600000)); // Random time within last hour
+
+    setLastLogin(new Date(Date.now() - Math.random() * 3600000)); 
 
     const welcomeMessage: HistoryEntry = {
       command: "",
@@ -810,19 +806,18 @@ Y S 7       7 S Y
     setHistory(initialHistoryArray);
   }, []);
 
-  // Update last login display every minute
   useEffect(() => {
     const interval = setInterval(() => {
-      // Force re-render to update "last login" time
+      
       setHistory((prev) => [...prev]);
-    }, 60000); // Update every minute
+    }, 60000); 
 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 p-2 sm:p-4 flex items-center justify-center">
-      {/* Background Elements */}
+
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-72 sm:h-72 md:w-96 md:h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-72 sm:h-72 md:w-96 md:h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
@@ -830,23 +825,22 @@ Y S 7       7 S Y
       </div>
 
       <div className="w-full max-w-xl sm:max-w-3xl mx-auto relative z-10">
-        {/* Terminal Window */}
-        <div className="glass-terminal rounded-2xl shadow-2xl overflow-hidden border border-white/10 backdrop-blur-xl bg-black/40 max-w-full mx-auto sm:max-w-3xl sm:p-6 p-4">
-          {/* Terminal Header */}
-          <div className="glass-header px-3 py-2 flex items-center justify-between border-b border-white/10 backdrop-blur-md bg-white/5">
+     
+         <div className="glass-terminal rounded-2xl shadow-2xl overflow-hidden border border-white/10 backdrop-blur-xl bg-black/40">
+         
+          <div className="glass-header px-4 py-3 flex items-center justify-between border-b border-white/10 backdrop-blur-md bg-white/5">
             <div className="flex items-center space-x-2">
               <Circle className="w-3 h-3 fill-red-500 text-red-500 hover:fill-red-400 transition-colors cursor-pointer" />
               <Circle className="w-3 h-3 fill-yellow-500 text-yellow-500 hover:fill-yellow-400 transition-colors cursor-pointer" />
               <Circle className="w-3 h-3 fill-green-500 text-green-500 hover:fill-green-400 transition-colors cursor-pointer" />
             </div>
-            <div className="text-gray-400 text-xs sm:text-sm font-mono bg-black/20 px-2 py-1 rounded-lg backdrop-blur-sm truncate max-w-[50vw] sm:max-w-[70vw]">
-              {personalInfo.name.toLowerCase().replace(" ", "")}@portfolio:
-              {currentPath}
+            <div className="text-gray-400 text-sm font-mono bg-black/20 px-3 py-1 rounded-lg backdrop-blur-sm">
+              {personalInfo.name.toLowerCase().replace(" ", "")}@portfolio:{currentPath}
             </div>
-            <div className="w-12 sm:w-16"></div>
+            <div className="w-16"></div>
           </div>
 
-          {/* Terminal Content */}
+
           <div
             ref={terminalRef}
             className="bg-black/20 backdrop-blur-sm text-green-400 font-mono text-xs sm:text-sm p-3 sm:p-6 min-h-[300px] sm:min-h-[500px] max-h-[60vh] sm:max-h-[70vh] overflow-y-auto glass-scrollbar rounded-b-2xl"
@@ -873,7 +867,6 @@ Y S 7       7 S Y
               </div>
             ))}
 
-            {/* Current Input Line */}
             <form
               onSubmit={handleSubmit}
               className="flex flex-col sm:flex-row sm:items-center"
@@ -902,7 +895,6 @@ Y S 7       7 S Y
           </div>
         </div>
 
-        {/* Quick Commands */}
         <div className="mt-6 text-center px-2 sm:px-0">
           <div className="flex flex-wrap justify-center gap-2">
             {["projects", "skills", "experience", "contact"].map((cmd) => (
