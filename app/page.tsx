@@ -11,6 +11,8 @@ import {
   MapPin,
   Download,
   Linkedin,
+  
+
 } from "lucide-react";
 import type { JSX } from "react/jsx-runtime";
 
@@ -40,6 +42,7 @@ interface PersonalInfo {
   education: string[];
   github: string;
   linkedin: string;
+  leetcode:string;
 }
 
 interface HistoryEntry {
@@ -103,6 +106,7 @@ export default function GlassTerminalPortfolio() {
     ],
     github: "https://github.com/yashsrivasta7a",
     linkedin: "https://linkedin.com/in/yashsrivasta7a",
+    leetcode: "https://leetcode.com/u/ys7/",
   };
 
   const projects: Project[] = [
@@ -271,6 +275,19 @@ export default function GlassTerminalPortfolio() {
               rel="noopener noreferrer"
             >
               linkedin.com/in/yashsrivasta7a
+            </a>
+          </div>
+        </div>
+         <div className="glass-card p-4 rounded-lg border border-white/10 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300">
+          <div className="flex items-center space-x-3">
+            <ExternalLink className="w-4 h-4 text-gray-400" />
+            <a
+              href={personalInfo.leetcode}
+              className="text-gray-300 hover:text-green-400 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              leetcode.com/u/ys7/
             </a>
           </div>
         </div>
