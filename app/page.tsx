@@ -346,10 +346,10 @@ Y S 7       7 S Y
         <div className="text-gray-400 mb-2">Projects:</div>
         <div className="text-sm space-y-1">
           <div className="text-blue-400 bg-black/20 px-3 py-1 rounded inline-block cursor-pointer">
-            webapps/
+            webapps
           </div>
           <div className="text-blue-400 bg-black/20 px-3 py-1 rounded inline-block cursor-pointer">
-            extensions/
+            extensions
           </div>
         </div>
         <div className="text-gray-500 text-xs mt-3">
