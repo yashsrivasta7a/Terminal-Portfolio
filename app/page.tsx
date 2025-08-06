@@ -10,8 +10,13 @@ import {
   MapPin,
   Download,
   Linkedin,
-  
-
+  Filter,
+  Star,
+  Calendar,
+  Code,
+  Globe,
+  LinkedinIcon,
+  Instagram
 } from "lucide-react";
 import type { JSX } from "react/jsx-runtime";
 
@@ -23,6 +28,8 @@ interface Project {
   github?: string;
   live?: string;
   featured?: boolean;
+  type: 'webapp' | 'extension';
+  year?: string;
 }
 
 interface PersonalInfo {
@@ -58,6 +65,7 @@ export default function GlassTerminalPortfolio() {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [currentPath, setCurrentPath] = useState("~");
   const [lastLogin, setLastLogin] = useState<Date>(new Date());
+  const [projectFilter, setProjectFilter] = useState<'all' | 'featured' | 'webapps' | 'extensions'>('all');
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -101,11 +109,11 @@ export default function GlassTerminalPortfolio() {
       },
     ],
     education: [
-      "B.Tech in Computer Science Engineering - Manav Rachna International Institute Of Research & Studies (2022–2026)",
+      "B.Tech in Computer Science Engineering (2022–2026)",
     ],
     github: "https://github.com/yashsrivasta7a",
     linkedin: "https://linkedin.com/in/yashsrivasta7a",
-    leetcode: "https://leetcode.com/u/ys7/",
+    leetcode: "https://leetcode.com/u/yashsrivasta7a/",
   };
 
   const projects: Project[] = [
@@ -116,8 +124,10 @@ export default function GlassTerminalPortfolio() {
         "Smart music recommender based on weather using Spotify & Gemini APIs.",
       technologies: ["React", "Spotify API", "Gemini API"],
       github: "https://github.com/yashsrivasta7a/AuroraPlay",
-      live: "https://aurora-play.vercel.app/",
+      live: "https://auroraplayai.vercel.app/",
       featured: true,
+      type: 'webapp',
+      year: "2024"
     },
     {
       id: "2",
@@ -128,6 +138,8 @@ export default function GlassTerminalPortfolio() {
       github: "https://github.com/yashsrivasta7a/DreamPix",
       live: "https://dreampix.vercel.app/",
       featured: true,
+      type: 'webapp',
+      year: "2024"
     },
     {
       id: "3",
@@ -138,6 +150,8 @@ export default function GlassTerminalPortfolio() {
       github: "https://github.com/ManasJhaMJ/LawLink-web",
       live: "https://law-link-web.vercel.app/",
       featured: true,
+      type: 'webapp',
+      year: "2024"
     },
     {
       id: "4",
@@ -146,6 +160,8 @@ export default function GlassTerminalPortfolio() {
       technologies: ["JavaScript", "Chrome APIs"],
       github: "https://github.com/yashsrivasta7a",
       live: "https://autostar-ems.vercel.app/",
+      type: 'extension',
+      year: "2024"
     },
     {
       id: "5",
@@ -153,6 +169,8 @@ export default function GlassTerminalPortfolio() {
       description: "Real-time music lyrics viewer extension for youtube.",
       technologies: ["JavaScript", "Chrome APIs"],
       github: "https://github.com/yashsrivasta7a/Lyrically",
+      type: 'extension',
+      year: "2024"
     },
     {
       id: "6",
@@ -161,6 +179,8 @@ export default function GlassTerminalPortfolio() {
         "Your whatsapp buddy that sends the superset newly updated companies message to your whatsapp.",
       technologies: ["JavaScript", "Chrome APIs"],
       github: "https://github.com/yashsrivasta7a/PingSet",
+      type: 'extension',
+      year: "2024"
     },
     {
       id: "7",
@@ -168,6 +188,8 @@ export default function GlassTerminalPortfolio() {
       description: "Streamlines emergency blood donations by directly connecting and messaging nearby donors with recipients.",
       technologies: ["React", "Firebase"],
       live: "https://flow4life.vercel.app/",
+      type: 'webapp',
+      year: "2024"
     },
     {
       id: "8",
@@ -176,6 +198,8 @@ export default function GlassTerminalPortfolio() {
         "Hackathon project to convert organic waste into energy insights.",
       technologies: ["Next.js"],
       live: "https://organic-waste-to-energy.vercel.app/",
+      type: 'webapp',
+      year: "2024"
     },
     {
       id: "9",
@@ -184,6 +208,8 @@ export default function GlassTerminalPortfolio() {
         "A dynamic Pokémon encyclopedia with real-time data fetching.",
       technologies: ["React", "API Integration"],
       live: "https://pokedex-ys7.vercel.app/",
+      type: 'webapp',
+      year: "2024"
     },
   ];
 
@@ -202,9 +228,36 @@ export default function GlassTerminalPortfolio() {
 
   const handleResumeDownload = () => {
     window.open(
-      "https://drive.google.com/file/d/1Ng9n3CK7_vxZLWjLufZuTLaGZdQL8ESe/view?usp=sharing",
+      "https://drive.google.com/file/d/1Pfnr1L0tNAkztcF-HGJy8cXLsphhsuU2/view?usp=sharing",
       "_blank"
     );
+  };
+
+  const getFilteredProjects = () => {
+    switch (projectFilter) {
+      case 'featured':
+        return projects.filter(p => p.featured);
+      case 'webapps':
+        return projects.filter(p => p.type === 'webapp');
+      case 'extensions':
+        return projects.filter(p => p.type === 'extension');
+      default:
+        return projects;
+    }
+  };
+
+  const handleProjectFilter = (filter: 'all' | 'featured' | 'webapps' | 'extensions') => {
+    setProjectFilter(filter);
+
+    const currentEntry = history[history.length - 1];
+    if (currentEntry.command === 'projects') {
+      const newHistory = [...history];
+      newHistory[newHistory.length - 1] = {
+        command: 'projects',
+        output: commands.projects()
+      };
+      setHistory(newHistory);
+    }
   };
 
   const commands = {
@@ -236,7 +289,7 @@ export default function GlassTerminalPortfolio() {
           ))}
         </div>
         <div className="text-gray-500 text-xs mt-3">
-          Hint: `project [id]` is also available.
+          Hint: `project [id]` and project filter commands are also available.
         </div>
       </div>
     ),
@@ -264,30 +317,43 @@ export default function GlassTerminalPortfolio() {
         </div>
         <div className="glass-card p-4 rounded-lg border border-white/10 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300">
           <div className="flex items-center space-x-3">
-            <Linkedin className="w-4 h-4 text-gray-400" />
+            <LinkedinIcon className="w-4 h-4 text-gray-400" />
             <a
               href={personalInfo.linkedin}
               className="text-gray-300 hover:text-green-400 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
             >
-              linkedin.com/in/yashsrivasta7a
+              linkedin.com/yashsrivasta7a
             </a>
           </div>
         </div>
          <div className="glass-card p-4 rounded-lg border border-white/10 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300">
           <div className="flex items-center space-x-3">
-            <ExternalLink className="w-4 h-4 text-gray-400" />
+            <Code className="w-4 h-4 text-gray-400" />
             <a
               href={personalInfo.leetcode}
               className="text-gray-300 hover:text-green-400 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
             >
-              leetcode.com/u/ys7/
+              leetcode.com/yashsrivasta7a
             </a>
           </div>
         </div>
+         <div className="glass-card p-4 rounded-lg border border-white/10 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300">
+            <div className="flex items-center space-x-3">
+              <Instagram className="w-4 h-4 text-gray-400" />
+              <a
+                href="https://www.instagram.com/yashsrivasta7a/"
+                className="text-gray-300 hover:text-green-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                instagram.com/yashsrivasta7a
+              </a>
+            </div>
+          </div>
       </div>
     ),
 
@@ -338,41 +404,43 @@ Y S 7       7 S Y
       </div>
     ),
 
-    projects: () => (
-      <div className="glass-card p-4 rounded-lg border border-white/10 backdrop-blur-sm bg-white/5">
-        <div className="text-gray-400 mb-2">Projects:</div>
-        <div className="text-sm space-y-1">
-          <div className="text-blue-400 bg-black/20 px-3 py-1 rounded inline-block cursor-pointer">
-            webapps
+    projects: () => {
+   
+      setProjectFilter('all');
+      
+      return (
+        <div className="space-y-4">
+          <div className="text-gray-400 mb-4 flex items-center gap-2">
+            <span>Projects ({projects.length})</span>
           </div>
-          <div className="text-blue-400 bg-black/20 px-3 py-1 rounded inline-block cursor-pointer">
-            extensions
-          </div>
-        </div>
-        <div className="text-gray-500 text-xs mt-3">
-          Type a category name to see projects.
-        </div>
-      </div>
-    ),
-
-    webapps: () => (
-      <div className="space-y-4">
-        <div className="text-gray-400 mb-2">Web Applications:</div>
-        {projects
-          .filter((p) => !p.title.toLowerCase().includes("extension"))
-          .map((project) => (
+          
+          {projects.map((project) => (
             <div
               key={project.id}
-              className="glass-card p-4 rounded-lg border border-white/10 bg-white/5"
+              className="glass-card p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300"
             >
-              <div className="flex justify-between items-center mb-2">
-                <div className="text-white font-medium">{project.title}</div>
-                <div className="flex space-x-2">
+              <div className="flex justify-between items-start mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-green-400 font-mono bg-black/30 px-2 py-1 rounded text-xs font-bold border border-green-400/30">
+                    {project.id}
+                  </span>
+                  <div className="text-white font-medium">{project.title}</div>
+                  {project.featured && <Star className="w-4 h-4 text-yellow-400 fill-current" />}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className={`text-xs px-2 py-1 rounded ${
+                    project.type === 'webapp' 
+                      ? 'bg-blue-500/20 text-blue-400' 
+                      : 'bg-purple-500/20 text-purple-400'
+                  }`}>
+                    {project.type === 'webapp' ? 'Web App' : 'Extension'}
+                  </span>
                   {project.github && (
                     <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="hover:scale-110 transition-transform"
                     >
                       <Github className="w-4 h-4 text-gray-400 hover:text-white" />
                     </a>
@@ -382,36 +450,85 @@ Y S 7       7 S Y
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="hover:scale-110 transition-transform"
                     >
                       <ExternalLink className="w-4 h-4 text-green-400 hover:text-green-300" />
                     </a>
                   )}
                 </div>
               </div>
-              <div className="text-gray-300 text-sm">{project.description}</div>
+              <div className="text-gray-300 text-sm mb-3">{project.description}</div>
+              <div className="flex flex-wrap gap-1">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-xs text-gray-300 bg-black/30 backdrop-blur-sm px-2 py-1 rounded border border-white/10"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
           ))}
-      </div>
-    ),
 
-    extensions: () => (
-      <div className="space-y-4">
-        <div className="text-gray-400 mb-2">Chrome Extensions:</div>
-        {projects
-          .filter((p) => p.title.toLowerCase().includes("extension"))
-          .map((project) => (
+          <div className="text-gray-600 text-xs mt-4 pt-3 border-t border-white/10">
+            Tip: Use commands like 'extensions' or 'webapps'
+          </div>
+        </div>
+      );
+    },
+
+    filter: (type: string) => {
+      const validFilters = ['all', 'featured', 'webapps', 'extensions'];
+      if (validFilters.includes(type)) {
+        handleProjectFilter(type as any);
+        return commands.projects();
+      }
+      return (
+        <div className="glass-card p-4 rounded-lg border border-red-500/20 backdrop-blur-sm bg-red-500/5">
+          <div className="text-red-400">
+            Invalid filter. Use: {validFilters.join(', ')}
+          </div>
+        </div>
+      );
+    },
+
+    webapps: () => {
+      const webappProjects = projects.filter(p => p.type === 'webapp');
+      setProjectFilter('webapps');
+      
+      return (
+        <div className="space-y-4">
+          <div className="text-gray-400 mb-4 flex items-center gap-2">
+            <span>Projects ({webappProjects.length})</span>
+            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
+              webapps
+            </span>
+          </div>
+          
+          {webappProjects.map((project) => (
             <div
               key={project.id}
-              className="glass-card p-4 rounded-lg border border-white/10 bg-white/5"
+              className="glass-card p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300"
             >
-              <div className="flex justify-between items-center mb-2">
-                <div className="text-white font-medium">{project.title}</div>
-                <div className="flex space-x-2">
+              <div className="flex justify-between items-start mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-green-400 font-mono bg-black/30 px-2 py-1 rounded text-xs font-bold border border-green-400/30">
+                    {project.id}
+                  </span>
+                  <div className="text-white font-medium">{project.title}</div>
+                  {project.featured && <Star className="w-4 h-4 text-yellow-400 fill-current" />}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs px-2 py-1 rounded bg-blue-500/20 text-blue-400">
+                    Web App
+                  </span>
                   {project.github && (
                     <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="hover:scale-110 transition-transform"
                     >
                       <Github className="w-4 h-4 text-gray-400 hover:text-white" />
                     </a>
@@ -421,17 +538,185 @@ Y S 7       7 S Y
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="hover:scale-110 transition-transform"
                     >
                       <ExternalLink className="w-4 h-4 text-green-400 hover:text-green-300" />
                     </a>
                   )}
                 </div>
               </div>
-              <div className="text-gray-300 text-sm">{project.description}</div>
+              <div className="text-gray-300 text-sm mb-3">{project.description}</div>
+              <div className="flex flex-wrap gap-1">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-xs text-gray-300 bg-black/30 backdrop-blur-sm px-2 py-1 rounded border border-white/10"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
           ))}
-      </div>
-    ),
+
+          <div className="text-gray-600 text-xs mt-4 pt-3 border-t border-white/10">
+            Tip: Use commands like 'extensions' or 'webapps'
+          </div>
+        </div>
+      );
+    },
+
+    extensions: () => {
+   
+      const extensionProjects = projects.filter(p => p.type === 'extension');
+      setProjectFilter('extensions');
+      
+      return (
+        <div className="space-y-4">
+          <div className="text-gray-400 mb-4 flex items-center gap-2">
+            <span>Projects ({extensionProjects.length})</span>
+            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
+              extensions
+            </span>
+          </div>
+          
+          {extensionProjects.map((project) => (
+            <div
+              key={project.id}
+              className="glass-card p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300"
+            >
+              <div className="flex justify-between items-start mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-green-400 font-mono bg-black/30 px-2 py-1 rounded text-xs font-bold border border-green-400/30">
+                    {project.id}
+                  </span>
+                  <div className="text-white font-medium">{project.title}</div>
+                  {project.featured && <Star className="w-4 h-4 text-yellow-400 fill-current" />}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs px-2 py-1 rounded bg-purple-500/20 text-purple-400">
+                    Extension
+                  </span>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:scale-110 transition-transform"
+                    >
+                      <Github className="w-4 h-4 text-gray-400 hover:text-white" />
+                    </a>
+                  )}
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:scale-110 transition-transform"
+                    >
+                      <ExternalLink className="w-4 h-4 text-green-400 hover:text-green-300" />
+                    </a>
+                  )}
+                </div>
+              </div>
+              <div className="text-gray-300 text-sm mb-3">{project.description}</div>
+              <div className="flex flex-wrap gap-1">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-xs text-gray-300 bg-black/30 backdrop-blur-sm px-2 py-1 rounded border border-white/10"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div className="text-gray-600 text-xs mt-4 pt-3 border-t border-white/10">
+            Tip: Use commands like 'extensions' or 'webapps'
+          </div>
+        </div>
+      );
+    },
+
+    featured: () => {
+
+      const featuredProjects = projects.filter(p => p.featured);
+      setProjectFilter('featured');
+      
+      return (
+        <div className="space-y-4">
+          <div className="text-gray-400 mb-4 flex items-center gap-2">
+            <span>Projects ({featuredProjects.length})</span>
+            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
+              featured
+            </span>
+          </div>
+          
+          {featuredProjects.map((project) => (
+            <div
+              key={project.id}
+              className="glass-card p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300"
+            >
+              <div className="flex justify-between items-start mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-green-400 font-mono bg-black/30 px-2 py-1 rounded text-xs font-bold border border-green-400/30">
+                    {project.id}
+                  </span>
+                  <div className="text-white font-medium">{project.title}</div>
+                  <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className={`text-xs px-2 py-1 rounded ${
+                    project.type === 'webapp' 
+                      ? 'bg-blue-500/20 text-blue-400' 
+                      : 'bg-purple-500/20 text-purple-400'
+                  }`}>
+                    {project.type === 'webapp' ? 'Web App' : 'Extension'}
+                  </span>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:scale-110 transition-transform"
+                    >
+                      <Github className="w-4 h-4 text-gray-400 hover:text-white" />
+                    </a>
+                  )}
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:scale-110 transition-transform"
+                    >
+                      <ExternalLink className="w-4 h-4 text-green-400 hover:text-green-300" />
+                    </a>
+                  )}
+                </div>
+              </div>
+              <div className="text-gray-300 text-sm mb-3">{project.description}</div>
+              <div className="flex flex-wrap gap-1">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-xs text-gray-300 bg-black/30 backdrop-blur-sm px-2 py-1 rounded border border-white/10"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div className="text-gray-600 text-xs mt-4 pt-3 border-t border-white/10">
+            Tip: Use commands like 'extensions' or 'webapps'
+          </div>
+        </div>
+      );
+    },
 
     project: (id: string) => {
       const project = projects.find((p) => p.id === id);
@@ -457,7 +742,7 @@ Y S 7       7 S Y
                 <span className="text-xl text-white font-medium">
                   {project.title}
                 </span>
-                {project.featured && <span className="text-yellow-400">★</span>}
+                {project.featured && <Star className="w-5 h-5 text-yellow-400 fill-current" />}
               </div>
             </div>
             <div className="text-gray-300 mb-4">{project.description}</div>
@@ -560,7 +845,14 @@ Y S 7       7 S Y
               className="glass-card p-4 rounded-lg border border-white/10 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300"
             >
               <div className="text-gray-300 text-sm border-l-2 border-blue-400/30 pl-3">
+              <div>
+                  <div>
+Manav Rachna International Institute of Research and Studies :
+                </div>
+                <div>
                 {edu}
+                  </div>
+              </div>
               </div>
             </div>
           ))}
@@ -580,29 +872,16 @@ Y S 7       7 S Y
           </div>
           <div className="glass-card p-4 rounded-lg border border-white/10 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300">
             <div className="flex items-center space-x-3">
-              <Github className="w-4 h-4 text-gray-400" />
-              <a
-                href={personalInfo.github}
-                className="text-gray-300 hover:text-green-400 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                github.com/yashsrivasta7a
-              </a>
-            </div>
+            <LinkedinIcon className="w-4 h-4 text-gray-400" />
+            <a
+              href={personalInfo.linkedin}
+              className="text-gray-300 hover:text-green-400 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              linkedin.in/yashsrivasta7a
+            </a>
           </div>
-          <div className="glass-card p-4 rounded-lg border border-white/10 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300">
-            <div className="flex items-center space-x-3">
-              <ExternalLink className="w-4 h-4 text-gray-400" />
-              <a
-                href="https://yashsrivasta7a.tech"
-                className="text-gray-300 hover:text-green-400 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                yashsrivasta7a.tech
-              </a>
-            </div>
           </div>
         </div>
       </div>
@@ -708,6 +987,8 @@ Y S 7       7 S Y
             </div>
           </div>
         );
+      } else if (command === "filter" && args.length > 0) {
+        output = commands.filter(args[0]);
       } else {
         output = (commands as any)[command]();
       }
