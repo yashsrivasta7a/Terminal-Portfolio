@@ -1055,7 +1055,7 @@ Manav Rachna International Institute of Research and Studies :
                 <span className="text-green-400 font-mono bg-black/20 px-2 py-1 rounded">
                   help
                 </span>{" "}
-                to explore my work
+                to know more commands
               </div>
               <button
                 onClick={handleResumeDownload}
@@ -1172,7 +1172,7 @@ Manav Rachna International Institute of Research and Studies :
 
         <div className="mt-6 text-center px-2 sm:px-0">
           <div className="flex flex-wrap justify-center gap-2">
-            {["projects", "skills", "experience", "contact"].map((cmd) => (
+            {["projects", "skills", "experience", "socials" , "cls"].map((cmd) => (
               <button
                 key={cmd}
                 onClick={() => {
