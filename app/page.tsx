@@ -74,7 +74,7 @@ export default function GlassTerminalPortfolio() {
     title: "Full Stack Developer",
     email: "yashsrivasta7a@gmail.com",
     location: "Gurugram, India",
-    bio: "I build responsive, real-time web apps and Chrome extensions using React, Firebase, and modern APIs.",
+    bio: "async function life() { while(true) { await coffee(); code(); debug(); cry(); } }",
     skills: [
       "React",
       "Tailwind CSS",
@@ -266,7 +266,6 @@ export default function GlassTerminalPortfolio() {
         <div className="text-gray-400 mb-4">Available commands:</div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {[
-            "about",
             "projects",
             "skills",
             "experience",
@@ -294,11 +293,6 @@ export default function GlassTerminalPortfolio() {
       </div>
     ),
 
-    about: () => (
-      <div className="text-gray-300 text-sm leading-relaxed">
-        {personalInfo.bio}
-      </div>
-    ),
 
     socials: () => (
       <div className="space-y-3">
