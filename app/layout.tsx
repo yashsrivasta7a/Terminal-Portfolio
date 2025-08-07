@@ -1,18 +1,19 @@
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import './globals.css'
+import type { Metadata } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
-  title: 'Terminal Portfolio',
-  description: '',
-  generator: '',
-}
+  title: "Terminal Portfolio",
+  description: "",
+  generator: "",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -25,7 +26,9 @@ html {
 }
         `}</style>
       </head>
-      <body>{children}</body>
+      <body>{children}
+           <Analytics />
+      </body>
     </html>
-  )
+  );
 }
