@@ -228,7 +228,7 @@ export default function GlassTerminalPortfolio() {
 
   const handleResumeDownload = () => {
     window.open(
-      "https://drive.google.com/file/d/1Pfnr1L0tNAkztcF-HGJy8cXLsphhsuU2/view?usp=sharing",
+      "https://drive.google.com/file/d/1N0lzZmbIQ1d4AzHQkRp_--ekFIAggehS/view?usp=sharing",
       "_blank"
     );
   };
