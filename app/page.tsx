@@ -74,7 +74,7 @@ export default function GlassTerminalPortfolio() {
     title: "Full Stack Developer",
     email: "yashsrivasta7a@gmail.com",
     location: "Gurugram, India",
-    bio: "async function life() { while(true) { await coffee(); code(); debug(); cry(); } }",
+    bio: "async function portfolioLaunch() { while(true) { await music(); build(); breakStuff(); fixIt(); repeat(); } }",
     skills: [
       "React",
       "Tailwind CSS",
