@@ -379,13 +379,13 @@ Y S 7       7 S Y
               <span className="text-cyan-400 font-bold">OS:</span> Web Browser
             </div>
             <div>
-              <span className="text-cyan-400 font-bold">Host:</span> Vercel
+              <span className="text-cyan-400 font-bold">RAM:</span> Coffee-powered ⛽ 
             </div>
             <div>
-              <span className="text-cyan-400 font-bold">Shell:</span> web-sh
+              <span className="text-cyan-400 font-bold">Uptime:</span> 21 Years
             </div>
             <div>
-              <span className="text-cyan-400 font-bold">Skills:</span> {personalInfo.skills.slice(0, 5).join(", ")}...
+              <span className="text-cyan-400 font-bold">Shell:</span> /bin/Code
             </div>
           </div>
         </div>
